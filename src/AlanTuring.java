@@ -1,8 +1,6 @@
 import serializable.ISerializable;
-import students.Group;
 import students.GroupService;
 import students.ModelService;
-import students.Student;
 import students.StudentService;
 
 
@@ -16,8 +14,8 @@ public class AlanTuring {
         System.out.println("2. List students");
     }
 
-    private void print(ModelService service){
-        for(Object o : service.requestAll()){
+    private void print(ModelService<? extends ISerializable> service){
+        for(ISerializable o : service.requestAll()){
             System.out.println(o);
         }
     }
