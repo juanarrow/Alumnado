@@ -30,6 +30,16 @@ public class Group implements ISerializable{
             return null;
         }        
     }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return serialize();
+    }
     
     
 }

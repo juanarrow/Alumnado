@@ -14,14 +14,14 @@ import java.io.File;
 public abstract class FileService<T extends ISerializable> implements IFileService<T> {
     
     String fileName;
-    ArrayList<T> items = new ArrayList<T>();
+    ArrayList<ISerializable> items = new ArrayList<ISerializable>();
     
     public FileService(String fileName) {        
         this.fileName = fileName;
     }
 
     @Override
-    public List<T> readFromFile() {
+    public List<ISerializable> readFromFile() {
         try{
             BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
             String line = "";
@@ -38,10 +38,10 @@ public abstract class FileService<T extends ISerializable> implements IFileServi
         }                
     }
     @Override
-    public boolean writeToFile(T[] items, boolean append) {
+    public boolean writeToFile(ISerializable[] items, boolean append) {
         try{    
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(this.fileName), append));
-            for(T item: items){
+            for(ISerializable item: items){
                 bw.write(item.serialize());
             }
             bw.close();

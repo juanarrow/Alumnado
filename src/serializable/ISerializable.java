@@ -1,6 +1,6 @@
 package serializable;
 
-public interface ISerializable {
+public interface ISerializable {    
     public static String serialize(ISerializable item){
         return item.serialize();
     }
@@ -12,4 +12,6 @@ public interface ISerializable {
     public String serialize();
 
     public ISerializable deserialize(String data);
+
+    public Long getId();
 }

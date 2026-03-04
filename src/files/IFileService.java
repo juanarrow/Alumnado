@@ -2,7 +2,9 @@ package files;
 
 import java.util.List;
 
-public interface IFileService<T> {
-    public List<T> readFromFile();
-    public boolean writeToFile(T[] items, boolean append);
+import serializable.ISerializable;
+
+public interface IFileService<T extends ISerializable> {
+    public List<ISerializable> readFromFile();
+    public boolean writeToFile(ISerializable[] items, boolean append);
 }

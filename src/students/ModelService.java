@@ -4,44 +4,75 @@ import java.util.ArrayList;
 
 import files.FileService;
 import serializable.ISerializable;
+import students.exceptions.ItemAlreadyExists;
+import students.exceptions.ItemNotFound;
 
 public class ModelService<T extends ISerializable> implements ICRUD<T>{
 
     FileService<T> fileService;
-    ArrayList<T> items = new ArrayList<>();
+    ArrayList<ISerializable> items = new ArrayList<>();
 
-    ModelService(String fileName, FileService<T> fileService){        
+    ModelService(FileService<T> fileService){        
         this.fileService = fileService;
+        this.items = (ArrayList<ISerializable>) fileService.readFromFile();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ISerializable create(ISerializable item) throws ItemAlreadyExists {
+        if(!this.items.contains(item)){
+            this.items.add(item);
+            fileService.writeToFile(this.items.toArray((T[]) new ISerializable[this.items.size()]), false);
+            return item;
+        }
+        throw new ItemAlreadyExists(); 
+    }
+    
+    @Override
+    public Object[] requestAll() {
+        Object[] objects = this.items.toArray();
+        return objects;
     }
 
     @Override
-    public T create(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public ISerializable requestById(int id) {        
+
+        /*
+        //Forma patatera
+        T object = null;
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).getId() == id){
+                object = items.get(i);
+                break;
+            }
+        }
+
+        return object;
+        */
+        return this.items.stream().filter(item -> item.getId() == id).findFirst().orElse(null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public T[] requestAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'requestAll'");
+    public ISerializable update(ISerializable item) throws ItemNotFound {
+        if(this.items.contains(item)){
+            this.items.add(item);
+            fileService.writeToFile(this.items.toArray((T[]) new ISerializable[this.items.size()]), false);
+            return item;
+        }
+        throw new ItemNotFound(); 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public T requestById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'requestById'");
-    }
-
-    @Override
-    public T update(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public T delete(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public ISerializable delete(int id) throws ItemNotFound{
+        ISerializable item = requestById(id);
+        if(item != null){
+            this.items.remove(item);
+            fileService.writeToFile(this.items.toArray((T[]) new ISerializable[this.items.size()]), false);
+            return item;
+        }
+        throw new ItemNotFound(); 
     }
 
     
