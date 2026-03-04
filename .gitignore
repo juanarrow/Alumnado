@@ -1,0 +1,47 @@
+# Bytecode and class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Build directories
+/bin/
+/build/
+/out/
+/target/
+
+# IDE and editor config
+*.iml
+.idea/
+*.ipr
+*.iws
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Eclipse specific
+.project
+.classpath
+.settings/
+.metadata/
+
+# NetBeans specific
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Others
+*.package
