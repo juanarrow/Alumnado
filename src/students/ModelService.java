@@ -34,13 +34,17 @@ public class ModelService<T extends ISerializable> implements ICRUD<T>{
 
     @Override
     public ISerializable requestById(int id) {        
-        return this.items.stream().filter(item -> item.getId() == id).findFirst().orElse(null);
+        return this.items
+            .stream()
+            .filter(item -> item.getId()!=null?item.getId().equals(Long.valueOf(id)):false)
+            .findFirst()
+            .orElse(null);
     }
 
     @Override
     public ISerializable update(ISerializable item) throws ItemNotFound {
         if(this.items.contains(item)){
-            this.items.add(item);
+            this.items.set(this.items.indexOf(item), item);
             fileService.writeToFile(this.items.toArray(new ISerializable[0]), false);
             return item;
         }
