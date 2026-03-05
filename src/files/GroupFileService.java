@@ -1,7 +1,5 @@
 package files;
 
-import java.util.List;
-
 import students.Group;
 
 public class GroupFileService extends FileService<Group>{
@@ -12,8 +10,7 @@ public class GroupFileService extends FileService<Group>{
 
     @Override
     public Group deserialize(String line) {
-        Group group = new Group();        
-        return group.deserialize(line);
+        return new Group().deserialize(line);
     }
 
         
