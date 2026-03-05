@@ -41,5 +41,17 @@ public class Group implements ISerializable{
         return serialize();
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj ) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Group group = (Group) obj;
+        return Long.valueOf(id).equals(Long.valueOf(group.getId()));
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
     
 }

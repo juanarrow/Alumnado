@@ -6,7 +6,7 @@ import java.util.Date;
 import serializable.ISerializable;
 
 public class Student implements ISerializable {
-    long id;
+    Long id;
     String name;
     String surname;
     Date birthDate;
@@ -44,5 +44,18 @@ public class Student implements ISerializable {
     public String toString() {
         return serialize();
     }    
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj ) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Student student = (Student) obj;
+        return Long.valueOf(id).equals(Long.valueOf(student.getId()));
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
 
