@@ -14,4 +14,6 @@ public interface ISerializable {
     public ISerializable deserialize(String data);
 
     public Long getId();
+
+    public void setId(Long id);
 }

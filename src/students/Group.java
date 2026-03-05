@@ -1,6 +1,8 @@
 package students;
 
 
+import java.text.SimpleDateFormat;
+
 import serializable.ISerializable;
 
 public class Group implements ISerializable{
@@ -9,6 +11,17 @@ public class Group implements ISerializable{
     String name;
     String tutor;
     Long level;
+
+    public Group(String line){
+        deserialize(line);
+    }
+
+    public Group(Long id, String name, String tutor, long level) {
+        this.id = id;
+        this.name = name;
+        this.tutor = tutor;                        
+        this.level = level;
+    }
 
      @Override
     public String serialize() {
@@ -37,6 +50,23 @@ public class Group implements ISerializable{
     }
 
     @Override
+    public void setId(Long id) {        
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getLevel() {
+        return level;
+    }
+
+    public String getTutor() {
+        return tutor;
+    }
+
+    @Override
     public String toString() {
         return serialize();
     }
@@ -46,7 +76,7 @@ public class Group implements ISerializable{
         if(this==obj ) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
         Group group = (Group) obj;
-        return Long.valueOf(id).equals(Long.valueOf(group.getId()));
+        return id.equals(group.getId());
     }
 
     @Override
@@ -54,4 +84,4 @@ public class Group implements ISerializable{
         return id != null ? id.hashCode() : 0;
     }
     
-}
+} 

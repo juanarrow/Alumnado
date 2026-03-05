@@ -10,7 +10,7 @@ import java.util.List;
 import serializable.ISerializable;
 
 import java.io.File;
-
+ 
 public abstract class FileService<T extends ISerializable> implements IFileService<T> {
     
     String fileName;
@@ -42,7 +42,8 @@ public abstract class FileService<T extends ISerializable> implements IFileServi
         try{    
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(this.fileName), append));
             for(ISerializable item: items){
-                bw.write(item.serialize());
+                bw.write(item.serialize()+"\n");
+
             }
             bw.close();
             return true;

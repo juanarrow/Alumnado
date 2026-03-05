@@ -1,5 +1,6 @@
 package students;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,9 +13,36 @@ public class Student implements ISerializable {
     Date birthDate;
     long group_id;
 
+    public Student(String line){
+        deserialize(line);
+    }
+    public Student(Long id, String name, String surname, Date birthDate, long group_id) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.group_id = group_id;
+    }
+    public Student(Long id, String name, String surname, String birthDate, long group_id) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");            
+        try{
+            this.birthDate = format.parse(birthDate);   
+        }
+        catch(Exception e){
+            this.birthDate = null;
+        }
+        
+        this.group_id = group_id;
+    }
+
     @Override
     public String serialize() {
-        return String.format("%d;%s;%s;%s;%d", id, name, surname, birthDate.toString(), group_id);
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String birthDateString = formatter.format(this.birthDate);
+        return String.format("%d;%s;%s;%s;%d", id, name, surname, birthDateString, group_id);
     }
 
     @Override
@@ -41,6 +69,32 @@ public class Student implements ISerializable {
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getGroup_id() {
+        return group_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public String getBirthDateAsString(){
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.birthDate);
+    }
+
+    @Override
     public String toString() {
         return serialize();
     }    
@@ -50,12 +104,12 @@ public class Student implements ISerializable {
         if(this==obj ) return true;
         if(obj == null || getClass() != obj.getClass()) return false;
         Student student = (Student) obj;
-        return Long.valueOf(id).equals(Long.valueOf(student.getId()));
+        return id.equals(student.getId());
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
+    } 
 }
 
